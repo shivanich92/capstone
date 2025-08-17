@@ -1,18 +1,4 @@
 import streamlit as st
-from streamlit_lottie import st_lottie
-import requests
-
-# ------------------- Helper Function for Lottie -------------------
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
-# Load Animations
-food_anim = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json")
-electronics_anim = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_ynz8yoyn.json")
-clothes_anim = load_lottieurl("https://assets1.lottiefiles.com/packages/lf20_2glqweqs.json")
 
 # ------------------- Streamlit Page Config -------------------
 st.set_page_config(page_title="Customer Support System", page_icon="🛠️", layout="centered")
@@ -44,15 +30,14 @@ st.markdown("""
 st.title("✨ Customer Support System ✨")
 st.markdown("Choose a category to get personalized **support & recommendations** 🚀")
 
-# ------------------- Tabs instead of Sidebar -------------------
+# ------------------- Tabs -------------------
 tab1, tab2, tab3 = st.tabs(["🍎 Food", "🔌 Electronics", "👗 Clothes"])
 
 # ---------------- FOOD PAGE ----------------
 with tab1:
     st.header("🥗 Food Support")
-    st_lottie(food_anim, height=200, key="food")
+    st.image("https://media.giphy.com/media/3o7TKsQWMrHf1cAAuc/giphy.gif", width=200)
 
-    # Section 1: Weight check
     st.subheader("⚖️ Weight Check (Loss / Gain)")
     protein = st.number_input("Protein (g)", min_value=0, step=1, key="protein")
     carbs = st.number_input("Carbohydrates (g)", min_value=0, step=1, key="carbs")
@@ -66,7 +51,6 @@ with tab1:
         else:
             st.info("ℹ️ This food is better for **Maintenance.**")
 
-    # Section 2: Health check
     st.subheader("💊 Health Check (Healthy / Unhealthy)")
     sugar = st.number_input("Sugar (g)", min_value=0, step=1, key="sugar")
     sodium = st.number_input("Sodium (mg)", min_value=0, step=10, key="sodium")
@@ -82,7 +66,7 @@ with tab1:
 # ---------------- ELECTRONICS PAGE ----------------
 with tab2:
     st.header("🔋 Electronics Support")
-    st_lottie(electronics_anim, height=200, key="electronics")
+    st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=200)
     
     issue_type = st.radio("Select Issue Type:", ["Manual Issue", "Technical Issue"], key="issue_type")
     product = st.selectbox("Select Product:", ["Laptop", "Smartphone", "Washing Machine", "TV", "Refrigerator"], key="product")
@@ -93,7 +77,7 @@ with tab2:
                 st.info(f"📘 {product}: Please check **Quick Start Guide** in the box.")
             else:
                 st.info(f"📘 {product}: Refer to the **User Manual** provided.")
-        else:  # Technical Issue
+        else:
             messages = {
                 "Laptop": "🛠️ Run diagnostics or contact service center.",
                 "Smartphone": "📱 Restart the phone. If issue persists, visit service center.",
@@ -106,7 +90,7 @@ with tab2:
 # ---------------- CLOTHES PAGE ----------------
 with tab3:
     st.header("👗 Clothing Support")
-    st_lottie(clothes_anim, height=200, key="clothes")
+    st.image("https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif", width=200)
     
     skin_type = st.selectbox("Select Skin Type:", ["Fair", "Medium", "Dark"], key="skin")
     color_pref = st.selectbox("Choose Preferred Color:", ["Red", "Blue", "Green", "Black", "White", "Yellow"], key="color")
@@ -122,8 +106,9 @@ with tab3:
                 st.success(f"👕 {color_pref} complements **Medium skin tone** very well. 🌼")
             else:
                 st.info(f"👚 {color_pref} is fine, but **earthy tones** usually suit Medium skin.")
-        else:  # Dark skin
+        else:
             if color_pref in ["Red", "Yellow", "White"]:
                 st.success(f"👕 {color_pref} pops beautifully on **Dark skin.** 🔥")
             else:
                 st.info(f"👔 {color_pref} works, but **brighter colors** stand out better.")
+
